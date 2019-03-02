@@ -51,7 +51,7 @@ class App extends Component {
       // `https://api.giphy.com/v1/search?api_key=JU6K8LiJFWg6ububq0idHxB0yo7IBEXI&q=${
       //   ev.target.value
       // }&limit=10`
-      'https://api.giphy.com/v1/gifs/search?api_key=JU6K8LiJFWg6ububq0idHxB0yo7IBEXI&q=cheeseburgers&limit=10&offset=0&rating=G&lang=en'
+      'https://api.giphy.com/v1/gifs/search?api_key=JU6K8LiJFWg6ububq0idHxB0yo7IBEXI&q=cheeseburgers&limit=12&offset=0&rating=G&lang=en'
     )
       .then(res => res.json())
       .then(json => {
@@ -66,7 +66,7 @@ class App extends Component {
      * https://api.giphy.com/v1/gifs/trending?api_key=JU6K8LiJFWg6ububq0idHxB0yo7IBEXI
      */
     fetch(
-      "https://api.giphy.com/v1/gifs/trending?api_key=JU6K8LiJFWg6ububq0idHxB0yo7IBEXI&limit=10"
+      "https://api.giphy.com/v1/gifs/trending?api_key=JU6K8LiJFWg6ububq0idHxB0yo7IBEXI&limit=12"
     )
       .then(res => res.json())
       .then(json => {
