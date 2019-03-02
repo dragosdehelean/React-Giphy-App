@@ -1,13 +1,13 @@
 {
-  "main.css": "/React-Giphy-App/static/css/main.ce6b84c8.chunk.css",
-  "main.js": "/React-Giphy-App/static/js/main.b503224e.chunk.js",
-  "main.js.map": "/React-Giphy-App/static/js/main.b503224e.chunk.js.map",
+  "main.css": "/React-Giphy-App/static/css/main.c80f99af.chunk.css",
+  "main.js": "/React-Giphy-App/static/js/main.d00cbf2b.chunk.js",
+  "main.js.map": "/React-Giphy-App/static/js/main.d00cbf2b.chunk.js.map",
   "runtime~main.js": "/React-Giphy-App/static/js/runtime~main.6e70b7e7.js",
   "runtime~main.js.map": "/React-Giphy-App/static/js/runtime~main.6e70b7e7.js.map",
-  "static/js/2.a080abdb.chunk.js": "/React-Giphy-App/static/js/2.a080abdb.chunk.js",
-  "static/js/2.a080abdb.chunk.js.map": "/React-Giphy-App/static/js/2.a080abdb.chunk.js.map",
+  "static/js/2.5fea0a9e.chunk.js": "/React-Giphy-App/static/js/2.5fea0a9e.chunk.js",
+  "static/js/2.5fea0a9e.chunk.js.map": "/React-Giphy-App/static/js/2.5fea0a9e.chunk.js.map",
   "index.html": "/React-Giphy-App/index.html",
-  "precache-manifest.3dec14b0b907ab597afa47ebd9007eef.js": "/React-Giphy-App/precache-manifest.3dec14b0b907ab597afa47ebd9007eef.js",
+  "precache-manifest.f824e9db7ad80e1cdfb91d646b486c95.js": "/React-Giphy-App/precache-manifest.f824e9db7ad80e1cdfb91d646b486c95.js",
   "service-worker.js": "/React-Giphy-App/service-worker.js",
-  "static/css/main.ce6b84c8.chunk.css.map": "/React-Giphy-App/static/css/main.ce6b84c8.chunk.css.map"
+  "static/css/main.c80f99af.chunk.css.map": "/React-Giphy-App/static/css/main.c80f99af.chunk.css.map"
 }
