@@ -18,13 +18,21 @@ class SearchBar extends Component {
       this.props.onSearchChange(this.state.searchTerm);
     }, 800);
     this.setState({timeoutId: id,  searchTerm: ev.target.value }); 
-  }  
+  }
+  
+  /**
+   * Does nothing but blocks the default behaviour
+   * Changings of the search term are handled by onChangeHandler
+   */
+  handleSubmit = (ev)=>{
+    ev.preventDefault();
+  }
 
   render() {
 
     return (
       <div className="col-12 col-md-10 col-lg-8">
-        <form className="card card-sm">
+        <form className="card card-sm" onSubmit={this.handleSumbit}>
           <div className="card-body row no-gutters align-items-center">
             <div className="col-auto">
               <i className="fas fa-search h3 text-body" />
