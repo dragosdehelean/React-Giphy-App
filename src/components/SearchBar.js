@@ -22,17 +22,19 @@ class SearchBar extends Component {
   
   /**
    * Does nothing but blocks the default behaviour
-   * Changings of the search term are handled by onChangeHandler
+   * Changes of the search term are handled by onChangeHandler
    */
   handleSubmit = (ev)=>{
     ev.preventDefault();
+    const searchTerm = this.state.searchTerm;
+    if (searchTerm) this.props.onSearchChange(this.state.searchTerm); 
   }
 
   render() {
 
     return (
       <div className="col-12 col-md-10 col-lg-8">
-        <form className="card card-sm" onSubmit={this.handleSumbit}>
+        <form className="card card-sm" onSubmit={this.handleSubmit}>
           <div className="card-body row no-gutters align-items-center">
             <div className="col-auto">
               <i className="fas fa-search h3 text-body" />
