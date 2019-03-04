@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/React-Giphy-App/precache-manifest.ae964f5876323c70f671e03b4c008802.js"
+  "/React-Giphy-App/precache-manifest.1054a1756282ae15440459d2c64aa00a.js"
 );
 
 workbox.clientsClaim();
