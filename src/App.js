@@ -14,7 +14,7 @@ class App extends Component {
   };
 
   /**
-   * Checks if a gif's ID is in Mycollection
+   * Checks if a gif's ID is in myCollection
    */
   isInCollection = id => {
     return this.state.myCollection.map(gif => gif.id).indexOf(id) === -1 ? false : true;
@@ -41,9 +41,9 @@ class App extends Component {
    * When the serch term changes, fetches for a new set gifs
    */
   handleOnSearchChange = searchTerm => {
-    
     console.log(searchTerm);
-    const url =  "https://api.giphy.com/v1/gifs/search?api_key=JU6K8LiJFWg6ububq0idHxB0yo7IBEXI&q=" + searchTerm + "&limit=12"
+    const url =
+      "https://api.giphy.com/v1/gifs/search?api_key=JU6K8LiJFWg6ububq0idHxB0yo7IBEXI&q=" + searchTerm + "&limit=12";
     fetch(url)
       .then(res => res.json())
       .then(json => {
@@ -52,17 +52,35 @@ class App extends Component {
       .catch(error => console.log(error));
   };
 
+  /**
+   * Sets the myCollection array on the state with the value from localStorage
+   */
+  componentWillMount() {
+    if (localStorage.getItem("myCollection")) {
+      this.setState({
+        myCollection: JSON.parse(localStorage.getItem("myCollection"))
+      });
+    }
+  }
+
+  /**
+   * Populates Show Images with default data (without search) - trending gifs
+   * https://api.giphy.com/v1/gifs/trending?api_key=JU6K8LiJFWg6ububq0idHxB0yo7IBEXI
+   */
   componentDidMount() {
-    /**
-     * Populates Show Images with default data (without search) - trending gifs
-     * https://api.giphy.com/v1/gifs/trending?api_key=JU6K8LiJFWg6ububq0idHxB0yo7IBEXI
-     */
     fetch("https://api.giphy.com/v1/gifs/trending?api_key=JU6K8LiJFWg6ububq0idHxB0yo7IBEXI&limit=12")
       .then(res => res.json())
       .then(json => {
         this.setState({ gifs: json.data });
       })
       .catch(error => console.log(error));
+  }
+
+  /**
+   * Updates myCollection array from localStorage with data from the state
+   */
+  componentWillUpdate(nextProps, nextState) {
+    localStorage.setItem("myCollection", JSON.stringify(nextState.myCollection));
   }
 
   render() {
