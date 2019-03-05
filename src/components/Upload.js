@@ -50,6 +50,7 @@ class Upload extends Component {
             <p>ID: {id}</p>
             <iframe
               src={info.data.embed_url}
+              title={info.data.title}
               width="480"
               height="460"
               frameBorder="0"

@@ -31,7 +31,7 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <div className="row justify-content-center my-3">
+     
         <div className="col-12 col-md-10 col-lg-8">
           <form className="card card-sm" onSubmit={this.handleSubmit}>
             <div className="card-body row no-gutters align-items-center">
@@ -55,7 +55,7 @@ class SearchBar extends Component {
             </div>
           </form>
         </div>
-      </div>
+     
     );
   }
 }
