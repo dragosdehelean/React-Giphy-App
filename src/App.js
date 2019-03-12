@@ -50,6 +50,7 @@ class App extends Component {
     fetch(url)
       .then(res => res.json())
       .then(json => {
+        console.dir(json);
         this.setState({ gifs: json.data });
       })
       .catch(error => console.log(error));
