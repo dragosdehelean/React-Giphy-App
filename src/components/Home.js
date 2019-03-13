@@ -1,13 +1,17 @@
 import React from "react";
 import SearchBar from "./SearchBar";
 import GifList from "./GifList";
+import Pagination from "./Pagination"
 import propTypes from "prop-types";
 
 const Home = ({ onSearchChange, gifs, isInCollection, onToggleCollection }) => {
   return (
-    <React.Fragment>
+    <React.Fragment>     
       <div className="row justify-content-center my-3">
         <SearchBar onSearchChange={onSearchChange} />
+      </div>
+      <div className="row">
+        <Pagination />
       </div>
       <div className="row">
         <GifList
@@ -16,6 +20,7 @@ const Home = ({ onSearchChange, gifs, isInCollection, onToggleCollection }) => {
           onToggleCollection={onToggleCollection}
         />
       </div>
+      
     </React.Fragment>
   );
 };

@@ -10,6 +10,10 @@ import MyCollection from "./components/MyCollection";
 import Upload from "./components/Upload";
 import NotFound from "./components/NotFound";
 
+const BASE_URL = "https://api.giphy.com/v1/gifs";
+const API_KEY = "api_key=JU6K8LiJFWg6ububq0idHxB0yo7IBEXI";
+const QUERY_LIMIT = "&limit=12";
+
 class App extends Component {
   state = {
     gifs: [],
@@ -41,12 +45,10 @@ class App extends Component {
   };
 
   /**
-   * When the serch term changes, fetches for a new set gifs
+   * Generic method for fetching for the list of gifs to show on the page
+   * @param {string} url The desired API endpoint
    */
-  handleOnSearchChange = searchTerm => {
-    console.log(searchTerm);
-    const url =
-      "https://api.giphy.com/v1/gifs/search?api_key=JU6K8LiJFWg6ububq0idHxB0yo7IBEXI&q=" + searchTerm + "&limit=12";
+  fetchGifs(url){
     fetch(url)
       .then(res => res.json())
       .then(json => {
@@ -54,12 +56,28 @@ class App extends Component {
         this.setState({ gifs: json.data });
       })
       .catch(error => console.log(error));
+  }
+
+  /**
+   * When the serch term changes, fetches for a new set gifs
+   */
+  handleOnSearchChange = searchTerm => {
+    console.log(searchTerm);
+    const url = BASE_URL + "/search?" + API_KEY + "&q=" + searchTerm + QUERY_LIMIT;
+    this.fetchGifs(url);
+    
   };
 
   /**
-   * Sets the myCollection array on the state with the value from localStorage
-   */
-  componentWillMount() {
+   * 
+   */  
+  componentDidMount() {
+
+    // Populates Show Images with default data (without search) - trending gifs
+    const url = BASE_URL + "/trending?" + API_KEY + QUERY_LIMIT;
+    this.fetchGifs(url);
+
+    // Sets the myCollection array on the state with the value from localStorage
     if (localStorage.getItem("myCollection")) {
       this.setState({
         myCollection: JSON.parse(localStorage.getItem("myCollection"))
@@ -67,18 +85,7 @@ class App extends Component {
     }
   }
 
-  /**
-   * Populates Show Images with default data (without search) - trending gifs
-   * https://api.giphy.com/v1/gifs/trending?api_key=JU6K8LiJFWg6ububq0idHxB0yo7IBEXI
-   */
-  componentDidMount() {
-    fetch("https://api.giphy.com/v1/gifs/trending?api_key=JU6K8LiJFWg6ububq0idHxB0yo7IBEXI&limit=12")
-      .then(res => res.json())
-      .then(json => {
-        this.setState({ gifs: json.data });
-      })
-      .catch(error => console.log(error));
-  }
+  
 
   /**
    * Updates myCollection array from localStorage with data from the state
