@@ -18,24 +18,16 @@ class App extends Component {
   state = {
     gifs: [],
     currentPage: 0,
-    myCollection: localStorage.getItem("myCollection")
-      ? JSON.parse(localStorage.getItem("myCollection"))
-      : []
+    myCollection: localStorage.getItem("myCollection") ? JSON.parse(localStorage.getItem("myCollection")) : [],
+    endpoint: BASE_URL + "/trending?" + API_KEY + "&limit=" + QUERY_LIMIT ,
   };
 
   /**
    * Checks if a gif's ID is in myCollection
    */
   isInCollection = id => {
-    return this.state.myCollection.map(gif => gif.id).indexOf(id) === -1
-      ? false
-      : true;
+    return this.state.myCollection.map(gif => gif.id).indexOf(id) === -1 ? false : true;
   };
-
-  getPaginationOffset() {
-    console.log(this.state.currentPage);
-    return this.state.currentPage && (this.state.currentPage * QUERY_LIMIT);
-  }
 
   /**
    * If the checkbox changes, the gif is added or removed from MyCollection
@@ -79,9 +71,9 @@ class App extends Component {
       "&q=" +
       searchTerm +
       "&limit=" +
-      QUERY_LIMIT +
-      "&offset=" +
-      this.getPaginationOffset();
+      QUERY_LIMIT;
+
+    this.setState({ endpoint: url, currentPage: 0 });
 
     this.fetchGifs(url);
   };
@@ -89,35 +81,18 @@ class App extends Component {
   /**
    *  TEST !!
    */
-  handlePaginationNext =()=> {
+  handlePaginationNext = () => {
     this.setState(prevState => {
-      const url =
-        BASE_URL +
-        "/trending?" +
-        API_KEY +
-        "&limit=" +
-        QUERY_LIMIT +
-        "&offset=" +
-        this.getPaginationOffset();
-
-        console.log(url);
-
+      const url = this.state.endpoint + "&offset=" + (prevState.currentPage + 1) * QUERY_LIMIT;
       this.fetchGifs(url);
 
       return { currentPage: prevState.currentPage + 1 };
     });
-  }
+  };
 
   componentDidMount() {
     // Populates Show Images with default data (without search) - trending gifs
-    const url =
-      BASE_URL +
-      "/trending?" +
-      API_KEY +
-      "&limit=" +
-      QUERY_LIMIT +
-      "&offset=" +
-      this.getPaginationOffset();
+    const url = this.state.endpoint + "&offset=" + (this.state.currentPage * QUERY_LIMIT);
 
     this.fetchGifs(url);
   }
@@ -125,10 +100,7 @@ class App extends Component {
   componentDidUpdate(prevProps, prevState) {
     // if myCollection on the state has changed, updates localStorage
     if (prevState.myCollection.length !== this.state.myCollection.length) {
-      localStorage.setItem(
-        "myCollection",
-        JSON.stringify(this.state.myCollection)
-      );
+      localStorage.setItem("myCollection", JSON.stringify(this.state.myCollection));
     }
   }
 
