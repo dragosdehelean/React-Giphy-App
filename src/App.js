@@ -12,20 +12,30 @@ import NotFound from "./components/NotFound";
 
 const BASE_URL = "https://api.giphy.com/v1/gifs";
 const API_KEY = "api_key=JU6K8LiJFWg6ububq0idHxB0yo7IBEXI";
-const QUERY_LIMIT = "&limit=12";
+const QUERY_LIMIT = 12;
 
 class App extends Component {
   state = {
     gifs: [],
-    myCollection: []
+    currentPage: 0,
+    myCollection: localStorage.getItem("myCollection")
+      ? JSON.parse(localStorage.getItem("myCollection"))
+      : []
   };
 
   /**
    * Checks if a gif's ID is in myCollection
    */
   isInCollection = id => {
-    return this.state.myCollection.map(gif => gif.id).indexOf(id) === -1 ? false : true;
+    return this.state.myCollection.map(gif => gif.id).indexOf(id) === -1
+      ? false
+      : true;
   };
+
+  getPaginationOffset() {
+    console.log(this.state.currentPage);
+    return this.state.currentPage && (this.state.currentPage * QUERY_LIMIT);
+  }
 
   /**
    * If the checkbox changes, the gif is added or removed from MyCollection
@@ -48,7 +58,7 @@ class App extends Component {
    * Generic method for fetching for the list of gifs to show on the page
    * @param {string} url The desired API endpoint
    */
-  fetchGifs(url){
+  fetchGifs(url) {
     fetch(url)
       .then(res => res.json())
       .then(json => {
@@ -62,36 +72,64 @@ class App extends Component {
    * When the serch term changes, fetches for a new set gifs
    */
   handleOnSearchChange = searchTerm => {
-    console.log(searchTerm);
-    const url = BASE_URL + "/search?" + API_KEY + "&q=" + searchTerm + QUERY_LIMIT;
+    const url =
+      BASE_URL +
+      "/search?" +
+      API_KEY +
+      "&q=" +
+      searchTerm +
+      "&limit=" +
+      QUERY_LIMIT +
+      "&offset=" +
+      this.getPaginationOffset();
+
     this.fetchGifs(url);
-    
   };
 
   /**
-   * 
-   */  
-  componentDidMount() {
+   *  TEST !!
+   */
+  handlePaginationNext =()=> {
+    this.setState(prevState => {
+      const url =
+        BASE_URL +
+        "/trending?" +
+        API_KEY +
+        "&limit=" +
+        QUERY_LIMIT +
+        "&offset=" +
+        this.getPaginationOffset();
 
-    // Populates Show Images with default data (without search) - trending gifs
-    const url = BASE_URL + "/trending?" + API_KEY + QUERY_LIMIT;
-    this.fetchGifs(url);
+        console.log(url);
 
-    // Sets the myCollection array on the state with the value from localStorage
-    if (localStorage.getItem("myCollection")) {
-      this.setState({
-        myCollection: JSON.parse(localStorage.getItem("myCollection"))
-      });
-    }
+      this.fetchGifs(url);
+
+      return { currentPage: prevState.currentPage + 1 };
+    });
   }
 
-  
+  componentDidMount() {
+    // Populates Show Images with default data (without search) - trending gifs
+    const url =
+      BASE_URL +
+      "/trending?" +
+      API_KEY +
+      "&limit=" +
+      QUERY_LIMIT +
+      "&offset=" +
+      this.getPaginationOffset();
 
-  /**
-   * Updates myCollection array from localStorage with data from the state
-   */
-  componentWillUpdate(nextProps, nextState) {
-    localStorage.setItem("myCollection", JSON.stringify(nextState.myCollection));
+    this.fetchGifs(url);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // if myCollection on the state has changed, updates localStorage
+    if (prevState.myCollection.length !== this.state.myCollection.length) {
+      localStorage.setItem(
+        "myCollection",
+        JSON.stringify(this.state.myCollection)
+      );
+    }
   }
 
   render() {
@@ -109,6 +147,8 @@ class App extends Component {
                   gifs={this.state.gifs}
                   isInCollection={this.isInCollection}
                   onToggleCollection={this.handleToggleCollection}
+                  // test
+                  handlePaginationNext={this.handlePaginationNext}
                 />
               )}
             />
@@ -116,7 +156,7 @@ class App extends Component {
               path="/mycollection"
               render={() => (
                 <MyCollection
-                  myCollection={this.state.myCollection}                 
+                  myCollection={this.state.myCollection}
                   onToggleCollection={this.handleToggleCollection}
                   isInCollection={this.isInCollection}
                 />

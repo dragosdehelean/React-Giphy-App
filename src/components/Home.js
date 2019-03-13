@@ -4,14 +4,14 @@ import GifList from "./GifList";
 import Pagination from "./Pagination"
 import propTypes from "prop-types";
 
-const Home = ({ onSearchChange, gifs, isInCollection, onToggleCollection }) => {
+const Home = ({ onSearchChange, gifs, isInCollection, onToggleCollection, handlePaginationNext }) => {
   return (
     <React.Fragment>     
       <div className="row justify-content-center my-3">
         <SearchBar onSearchChange={onSearchChange} />
       </div>
       <div className="row">
-        <Pagination />
+        <Pagination handlePaginationNext={handlePaginationNext}/>
       </div>
       <div className="row">
         <GifList
