@@ -118,6 +118,7 @@ class App extends Component {
                 <MyCollection
                   myCollection={this.state.myCollection}                 
                   onToggleCollection={this.handleToggleCollection}
+                  isInCollection={this.isInCollection}
                 />
               )}
             />
